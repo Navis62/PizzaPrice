@@ -6,9 +6,5 @@ using System.Threading.Tasks;
 
 namespace PizzaPrice
 {
-    public class Pizza
-    {
-        public string Name { get; set; }
-        public string[] Ingredients { get; set; }
-    }
+    public record Pizza(string Name, string[] Ingredients);
 }

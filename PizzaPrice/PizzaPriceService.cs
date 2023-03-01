@@ -10,7 +10,7 @@
             }
             catch
             {
-                return 0;
+                throw new ArgumentException("Cette ingrédient n'existe pas");
             }
         }
 
@@ -20,6 +20,10 @@
             {
                 var pizza = Reference.Pizzas.Single(x => x.Name == name);
                 return pizza.Ingredients.Sum(GetIngredientPrice);
+            }
+            catch (ArgumentException exc)
+            {
+                throw new ApplicationException("Cette pizza contient un ingrédient qui n'existe pas");
             }
             catch
             {

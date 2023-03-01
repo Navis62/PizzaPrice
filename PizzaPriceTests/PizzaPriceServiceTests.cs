@@ -4,23 +4,19 @@ namespace PizzaPriceTests
 {
     public class PizzaPriceServiceTests
     {
-        private PizzaPriceService GetTarget()
-        {
-            return new PizzaPriceService();
-        }
-
         [Fact]
         public void When_OnlyTomatoSauce_Should_ReturnRightPrice()
         {
             // Arrange 
             var ingredient = "Sauce Tomate";
-            var pizzaPriceService = GetTarget();
+            var ingredientPrice = 1;
+            var pizzaPriceService = new PizzaPriceService();
 
             // Act
             var price = pizzaPriceService.GetIngredientPrice(ingredient);
 
             // Assert
-            Assert.Equal(1, price);
+            Assert.Equal(ingredientPrice, price);
         }
 
         [Fact]
@@ -28,27 +24,35 @@ namespace PizzaPriceTests
         {
             // Arrange 
             var ingredient = "Sauce Barbecue";
-            var pizzaPriceService = GetTarget();
+            var ingredientPrice = 2;
+            var pizzaPriceService = new PizzaPriceService();
 
             // Act
             var price = pizzaPriceService.GetIngredientPrice(ingredient);
 
             // Assert
-            Assert.Equal(2, price);
+            Assert.Equal(ingredientPrice, price);
         }
 
         [Fact]
-        public void When_IngredientDoesNotExist_Should_Return0()
+        public void When_IngredientDoesNotExist_Should_ThrowArgumentException()
         {
             // Arrange
             var ingredient = "Caviar";
-            var pizzaPriceService = GetTarget();
+            var pizzaPriceService = new PizzaPriceService();
 
-            // Act
-            var price = pizzaPriceService.GetIngredientPrice(ingredient);
+            // Act 
+            Assert.Throws<ArgumentException>(() => pizzaPriceService.GetIngredientPrice(ingredient));
+        }
+        
+        [Fact]
+        public void When_PizzaContainsAnIngredientThatDoesNotExist_Should_ThrowApplicationException()
+        {
+            // Arrange
+            var pizzaPriceService = new PizzaPriceService();
 
-            // Assert
-            Assert.Equal(0, price);
+            // Act 
+            Assert.Throws<ApplicationException>(() => pizzaPriceService.GetPizzaPrice("Raclette"));
         }
 
         [Fact]
@@ -56,46 +60,49 @@ namespace PizzaPriceTests
         {
             // Arrange 
             string[] ingredients = { "Crème fraiche", "Emmental" };
-            var pizzaPriceService = GetTarget();
+            var ingredientPrice = 3.5;
+            var pizzaPriceService = new PizzaPriceService();
 
             // Act
             var price = ingredients.Sum(pizzaPriceService.GetIngredientPrice);
 
             // Assert
-            Assert.Equal(3.5, price);
+            Assert.Equal(ingredientPrice, price);
         }
 
         [Fact]
         public void When_PizzaChevreMiel_ShouldReturnRightPrice()
         {
             // Arrange 
-            var pizzaPriceService = GetTarget();
+            var pizzaPriceService = new PizzaPriceService();
+            var pizzaPrice = 12.5;
 
             // Act
             var price = pizzaPriceService.GetPizzaPrice("Chèvre Miel");
 
             // Assert
-            Assert.Equal(12.5, price);
+            Assert.Equal(pizzaPrice, price);
         }
 
         [Fact]
         public void When_Pizza4FromagesBaseTomate_ShouldReturnRightPrice()
         {
             // Arrange 
-            var pizzaPriceService = GetTarget();
+            var pizzaPriceService = new PizzaPriceService();
+            var pizzaPrice = 13;
 
             // Act
             var price = pizzaPriceService.GetPizzaPrice("4 Fromages base tomate");
 
             // Assert
-            Assert.Equal(13, price);
+            Assert.Equal(pizzaPrice, price);
         }
 
         [Fact]
         public void When_PizzaDoesNotExist_Should_ThrowArgumentException()
         {
             // Arrange
-            var pizzaPriceService = GetTarget();
+            var pizzaPriceService = new PizzaPriceService();
 
             // Act 
             Assert.Throws<ArgumentException>(() => pizzaPriceService.GetPizzaPrice("Chocolat Fruits de mer"));
