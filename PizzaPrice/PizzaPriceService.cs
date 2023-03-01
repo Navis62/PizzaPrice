@@ -28,7 +28,7 @@
             }
             catch (ArgumentException exc)
             {
-                throw new ApplicationException("Cette pizza contient un ingrédient qui n'existe pas");
+                throw new ApplicationException("Cette pizza contient un ingrédient qui n'a pas de prix");
             }
             catch
             {
