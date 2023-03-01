@@ -2,11 +2,16 @@
 {
     public class PizzaPriceService
     {
-        public double GetIngredientPrice(string ingredient)
+        public double GetIngredientPrice(Ingredient ingredient)
         {
             try
             {
-                return Reference.Ingredients.Single(x => x.Name == ingredient).Price;
+                var price = Ingredients.IngredientList.Single(x => x.Name == ingredient.Name).Price;
+                if (price == 0)
+                {
+                    throw new ArgumentException("Le prix de cet ingrédient n'est pas défini");
+                }
+                return price;
             }
             catch
             {
@@ -18,7 +23,7 @@
         {
             try
             {
-                var pizza = Reference.Pizzas.Single(x => x.Name == name);
+                var pizza = Pizzas.PizzaList.Single(x => x.Name == name);
                 return pizza.Ingredients.Sum(GetIngredientPrice);
             }
             catch (ArgumentException exc)

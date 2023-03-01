@@ -8,8 +8,8 @@ namespace PizzaPriceTests
         public void When_OnlyTomatoSauce_Should_ReturnRightPrice()
         {
             // Arrange 
-            var ingredient = "Sauce Tomate";
             var ingredientPrice = 1;
+            var ingredient = new Ingredient("Sauce Tomate", ingredientPrice);
             var pizzaPriceService = new PizzaPriceService();
 
             // Act
@@ -23,8 +23,8 @@ namespace PizzaPriceTests
         public void When_OnlyBarbecueSauce_Should_ReturnRightPrice()
         {
             // Arrange 
-            var ingredient = "Sauce Barbecue";
             var ingredientPrice = 2;
+            var ingredient = new Ingredient("Sauce Barbecue", ingredientPrice);
             var pizzaPriceService = new PizzaPriceService();
 
             // Act
@@ -38,7 +38,7 @@ namespace PizzaPriceTests
         public void When_IngredientDoesNotExist_Should_ThrowArgumentException()
         {
             // Arrange
-            var ingredient = "Caviar";
+            var ingredient = new Ingredient("Caviar", 1000);
             var pizzaPriceService = new PizzaPriceService();
 
             // Act 
@@ -59,7 +59,9 @@ namespace PizzaPriceTests
         public void When_MultipleIngredients_ShouldReturnRightPrice()
         {
             // Arrange 
-            string[] ingredients = { "Crème fraiche", "Emmental" };
+            var cremeFraiche = new Ingredient("Crème fraiche", 1.5);
+            var emmental = new Ingredient("Emmental", 2);
+            Ingredient[] ingredients = { cremeFraiche, emmental };
             var ingredientPrice = 3.5;
             var pizzaPriceService = new PizzaPriceService();
 
