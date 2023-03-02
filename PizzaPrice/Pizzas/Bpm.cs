@@ -1,6 +1,6 @@
 ﻿namespace PizzaPrice.Pizzas
 {
-    public class Bpm : PizzaClass
+    public class Bpm : Pizza
     {
         public Bpm() :
             base("BPM", new[]

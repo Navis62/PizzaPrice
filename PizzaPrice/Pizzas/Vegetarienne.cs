@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PizzaPrice.Pizzas
 {
-    public class Vegetarienne : PizzaClass
+    public class Vegetarienne : Pizza
     {
         public Vegetarienne() :
             base("Végétarienne", new[]

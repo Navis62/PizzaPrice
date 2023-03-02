@@ -1,11 +1,11 @@
 ﻿namespace PizzaPrice
 {
-    public abstract class PizzaClass
+    public abstract class Pizza
     {
         private readonly Ingredient[] _ingredients;
         public string Name { get; }
 
-        protected PizzaClass(string name, Ingredient[] ingredients)
+        protected Pizza(string name, Ingredient[] ingredients)
         {
             Name = name;
             _ingredients = ingredients;

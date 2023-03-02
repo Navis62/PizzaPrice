@@ -4,18 +4,18 @@ namespace PizzaPrice
 {
     public class PizzaPriceService
     {
-        private readonly IEnumerable<PizzaClass?> _pizzas;
+        private readonly IEnumerable<Pizza?> _pizzas;
 
         public PizzaPriceService()
         {
             _pizzas = GetPizzaList();
         }
 
-        private static IEnumerable<PizzaClass?> GetPizzaList()
+        private static IEnumerable<Pizza?> GetPizzaList()
         {
             return Assembly.GetExecutingAssembly().GetTypes()
                 .Where(type => type.Namespace == "PizzaPrice.Pizzas")
-                .Select(pizza => Activator.CreateInstance(pizza) as PizzaClass);
+                .Select(pizza => Activator.CreateInstance(pizza) as Pizza);
         }
 
         public double GetPizzaPrice(string name)
