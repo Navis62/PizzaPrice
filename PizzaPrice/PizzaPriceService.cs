@@ -1,38 +1,27 @@
-﻿namespace PizzaPrice
+﻿using System.Reflection;
+
+namespace PizzaPrice
 {
     public class PizzaPriceService
     {
-        public double GetIngredientPrice(Ingredient ingredient)
-        {
-            try
-            {
-                var price = Ingredients.IngredientList.Single(x => x.Name == ingredient.Name).Price;
-                if (price == 0)
-                {
-                    throw new ArgumentException("Le prix de cet ingrédient n'est pas défini");
-                }
-                return price;
-            }
-            catch
-            {
-                throw new ArgumentException("Cette ingrédient n'existe pas");
-            }
-        }
-
         public double GetPizzaPrice(string name)
         {
+            var pizzaList = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(type => type.Namespace == "PizzaPrice.Pizzas")
+                .Select(pizza => Activator.CreateInstance(pizza) as PizzaClass);
+
             try
             {
-                var pizza = Pizzas.PizzaList.Single(x => x.Name == name);
-                return pizza.Ingredients.Sum(GetIngredientPrice);
+                var pizza = pizzaList.Single(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
+                return pizza.GetPrice();
             }
-            catch (ArgumentException exc)
+            catch(ApplicationException exc)
             {
-                throw new ApplicationException("Cette pizza contient un ingrédient qui n'a pas de prix");
+                throw new ApplicationException(exc.Message);
             }
             catch
             {
-                throw new ArgumentException("Cette pizza n'existe pas");
+                throw new ArgumentException($"La pizza {name} n'existe pas");
             }
         }
     }

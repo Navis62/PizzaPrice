@@ -5,47 +5,6 @@ namespace PizzaPriceTests
     public class PizzaPriceServiceTests
     {
         [Fact]
-        public void When_OnlyTomatoSauce_Should_ReturnRightPrice()
-        {
-            // Arrange 
-            var ingredientPrice = 1;
-            var ingredient = new Ingredient("Sauce Tomate", ingredientPrice);
-            var pizzaPriceService = new PizzaPriceService();
-
-            // Act
-            var price = pizzaPriceService.GetIngredientPrice(ingredient);
-
-            // Assert
-            Assert.Equal(ingredientPrice, price);
-        }
-
-        [Fact]
-        public void When_OnlyBarbecueSauce_Should_ReturnRightPrice()
-        {
-            // Arrange 
-            var ingredientPrice = 2;
-            var ingredient = new Ingredient("Sauce Barbecue", ingredientPrice);
-            var pizzaPriceService = new PizzaPriceService();
-
-            // Act
-            var price = pizzaPriceService.GetIngredientPrice(ingredient);
-
-            // Assert
-            Assert.Equal(ingredientPrice, price);
-        }
-
-        [Fact]
-        public void When_IngredientDoesNotExist_Should_ThrowArgumentException()
-        {
-            // Arrange
-            var ingredient = new Ingredient("Caviar", 1000);
-            var pizzaPriceService = new PizzaPriceService();
-
-            // Act 
-            Assert.Throws<ArgumentException>(() => pizzaPriceService.GetIngredientPrice(ingredient));
-        }
-        
-        [Fact]
         public void When_PizzaContainsAnIngredientThatDoesNotExist_Should_ThrowApplicationException()
         {
             // Arrange
@@ -53,23 +12,6 @@ namespace PizzaPriceTests
 
             // Act 
             Assert.Throws<ApplicationException>(() => pizzaPriceService.GetPizzaPrice("Raclette"));
-        }
-
-        [Fact]
-        public void When_MultipleIngredients_ShouldReturnRightPrice()
-        {
-            // Arrange 
-            var cremeFraiche = new Ingredient("Crème fraiche", 1.5);
-            var emmental = new Ingredient("Emmental", 2);
-            Ingredient[] ingredients = { cremeFraiche, emmental };
-            var ingredientPrice = 3.5;
-            var pizzaPriceService = new PizzaPriceService();
-
-            // Act
-            var price = ingredients.Sum(pizzaPriceService.GetIngredientPrice);
-
-            // Assert
-            Assert.Equal(ingredientPrice, price);
         }
 
         [Fact]

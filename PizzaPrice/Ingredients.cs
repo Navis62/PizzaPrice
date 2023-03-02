@@ -27,36 +27,26 @@
         public static Ingredient FourmeDAmbert = new("Fourme d'Ambert", 4);
         public static Ingredient FromageRaclette = new("Fromage raclette", 4);
         public static Ingredient Parmigiano = new("Parmigiano", 5);
-
-        public static List<Ingredient> IngredientList = new List<Ingredient>()
-        {
-            SauceTomate,
-            SauceBarbecue,
-            CremeFraiche,
-            SauceSamourai,
-            PouletRoti,
-            EmmietteDeBoeuf,
-            Merguez,
-            Jambon,
-            SaucissePepperoni,
-            Lardon,
-            Saumon,
-            Champignon,
-            OignonRouge,
-            OliveNoire,
-            PoivronVert,
-            PommeDeTerre,
-            Tomate,
-            Miel,
-            Ananas,
-            Mozzarella,
-            FromageDeChevre,
-            Emmental,
-            FourmeDAmbert,
-            FromageRaclette,
-            Parmigiano
-        };
     }
 
-    public record Ingredient(string Name, double Price);
+    public class Ingredient
+    {
+        private readonly double _price;
+        public string Name { get; }
+
+        public Ingredient(string name, double price)
+        {
+            Name = name;
+            _price = price;
+        }
+
+        public double GetPrice()
+        {
+            if (_price == 0)
+            {
+                throw new ApplicationException($"L'ingrédient {Name} n'a pas de prix");
+            }
+            return _price;
+        }
+    }
 }

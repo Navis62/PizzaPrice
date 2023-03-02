@@ -1,3 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using PizzaPrice;
+
 Console.WriteLine("Hello, World!");
+
+var pizzaPriceService = new PizzaPriceService();
+
+var price = pizzaPriceService.GetPizzaPrice("Pepperoni Lovers");
 
