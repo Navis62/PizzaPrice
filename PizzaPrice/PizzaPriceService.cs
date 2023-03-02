@@ -8,12 +8,12 @@ namespace PizzaPrice
 
         public PizzaPriceService()
         {
-           BuildPizzaList();
+            _pizzas = GetPizzaList();
         }
 
-        private static void BuildPizzaList()
+        private static IEnumerable<PizzaClass?> GetPizzaList()
         {
-            _pizzas = Assembly.GetExecutingAssembly().GetTypes()
+            return Assembly.GetExecutingAssembly().GetTypes()
                 .Where(type => type.Namespace == "PizzaPrice.Pizzas")
                 .Select(pizza => Activator.CreateInstance(pizza) as PizzaClass);
         }
