@@ -4,15 +4,25 @@ namespace PizzaPrice
 {
     public class PizzaPriceService
     {
-        public double GetPizzaPrice(string name)
+        private readonly IEnumerable<PizzaClass?> _pizzas;
+
+        public PizzaPriceService()
         {
-            var pizzaList = Assembly.GetExecutingAssembly().GetTypes()
+           BuildPizzaList();
+        }
+
+        private static void BuildPizzaList()
+        {
+            _pizzas = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(type => type.Namespace == "PizzaPrice.Pizzas")
                 .Select(pizza => Activator.CreateInstance(pizza) as PizzaClass);
+        }
 
+        public double GetPizzaPrice(string name)
+        {
             try
             {
-                var pizza = pizzaList.Single(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
+                var pizza = _pizzas.Single(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
                 return pizza.GetPrice();
             }
             catch(ApplicationException exc)
